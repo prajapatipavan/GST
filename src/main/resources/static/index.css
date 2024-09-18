@@ -1,0 +1,194 @@
+
+
+ @media (max-width: 768px) {
+    .main-nav {
+        position: relative;
+    }
+    .nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #fff;
+        padding: 10px;
+        width: 100%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .nav.active {
+        display: flex;
+    }
+    .nav li {
+        margin-bottom: 10px;
+    }
+}
+
+/* Media query for mobile devices */
+@media (max-width: 576px) {
+    .logo {
+        display: block;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .nav.user-menu.float-right {
+        float: none;
+        text-align: center;
+    }
+    .menu-toggle {
+        display: block;
+    }
+    .menu-trigger {
+        display: inline-block;
+    }
+    .nav {
+        position: static;
+        display: none;
+    }
+    .nav.active {
+        display: block;
+    }
+}
+	 
+	.logo{
+		height:90px
+	}
+	.imglogo{
+		height:100%;
+	}
+	
+	.view a{
+	
+	       position:relative;
+	       top:40px;
+	       left:480px;
+	
+	   }
+	
+	
+	/* Default font size and button styles */
+.left-content {
+    text-align: center;
+}
+.inner-content {
+    position: relative;
+}
+.inner-content h6 {
+    font-size: 24px; /* Adjust font size as needed */
+    margin-bottom: 10px;
+}
+.inner-content span {
+    font-size: 18px; /* Adjust font size as needed */
+    color: #888;
+}
+.main-border-button a {
+    display: inline-block;
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Media query for tablet and mobile devices */
+@media (max-width: 992px) {
+    .inner-content {
+        padding: 20px;
+    }
+    .inner-content h6 {
+        font-size: 20px; /* Adjust font size for tablets */
+    }
+    .inner-content span {
+        font-size: 16px; /* Adjust font size for tablets */
+    }
+    .main-border-button a {
+        padding: 8px 16px; /* Adjust button padding for tablets */
+    }
+}
+
+/* Media query for mobile devices */
+@media (max-width: 576px) {
+    .inner-content h6 {
+        font-size: 18px; /* Adjust font size for mobile */
+    }
+    .inner-content span {
+        font-size: 14px; /* Adjust font size for mobile */
+    }
+    .main-border-button a {
+        padding: 6px 12px; /* Adjust button padding for mobile */
+    }
+    .main-border-button {
+        margin-top: 20px; /* Add margin to separate button from text */
+    }
+}
+
+/* Media query for tablets and larger screens */
+@media (min-width: 768px) {
+    .nav.user-menu.float-right {
+        float: right;
+    }
+}
+
+/* Media query for mobile devices */
+@media (max-width: 767px) {
+    .nav.user-menu.float-right {
+        float: none;
+        text-align: center;
+        margin-top: 10px; /* Adjust as needed */
+    }
+    .nav.user-menu.float-right li {
+        display: inline-block;
+        margin-right: 10px; /* Adjust as needed */
+    }
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    transition: visibility 0.15s ease-in-out, opacity 0.15s ease-in-out;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    text-decoration: none;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    color: #16181b;
+    background-color: #f8f9fa;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff;
+    background-color: #007bff;
+}
+
+/* Adjust dropdown item styles as needed */
+
+	
