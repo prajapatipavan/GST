@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,34 +37,35 @@
             position: relative;
             left: 75%;
         }
+        
+        
+        #transactionTable {
+    width: 100%; /* Make the table take up the full width of its container */
+    max-width: 1200px; /* Adjust as needed for your layout */
+    margin: 0 auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Collapse table borders to remove spacing between cells */
+}
+
+#transactionTable th, #transactionTable td {
+    padding: 8px; /* Add padding for readability */
+    text-align: left; /* Align text to the left */
+    border: 1px solid #ddd; /* Add a light border for separation */
+}
+    
     </style>
     
-  
-
-
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#transactionTable').DataTable();
-        });
-    </script>
 </head>
 <body class="with-welcome-text">
   <%@include file="bootstraplink.jsp"%>
 
 
     <div class="container-scroller">
-        <!-- partial:partials/_navbar.html -->
+      
         <%@include file="NavbarDashbord.jsp"%>
 
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
-            <!-- partial:partials/_sidebar.html -->
+         
             <%@include file="sidebar.jsp"%>
 
             <!-- partial -->
@@ -78,7 +85,7 @@
                                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
                                         <div class="row">
                                             <h1>Transaction</h1>
-
+ 
                                             <form action="viewtransaction" method="get">
                                                 <label for="user">User:</label> 
                                                 <select id="user" name="userId" required onchange="this.form.submit()">
@@ -88,36 +95,36 @@
                                                 </select>
                                             </form>
 
-                                            <table id="transactionTable" class="display">
-                                                <thead>
-                                                    <tr>
-                                                        <th>User</th>
-                                                        <th>GST Rate</th>
-                                                        <th>GST Category</th>
-                                                        <th>Amount</th>
-                                                        <th>Date</th>
-                                                        <th>GST Number</th>
-                                                        <th>GST Amount</th>
-                                                        <th>Total Amount</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${gsttansaction}" var="transaction">
-                                                        <tr>
-                                                            <td>${transaction.user.username}</td>
-                                                            <td>${transaction.gstrate.rate}</td>
-                                                            <td>${transaction.gstcatagory.catagoryName}</td>
-                                                            <td>${transaction.amount}</td>
-                                                            <td>${transaction.date}</td>
-                                                            <td>${transaction.gstNumber}</td>
-                                                            <td>${transaction.gstAmount}</td>
-                                                            <td>${transaction.totalAmount}</td>
-                                                            <td><a href="deletetransaction?transactionId=${transaction.transactionId}">DELETE</a></td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                        <table id="transactionTable" class="display">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>GST Rate</th>
+                <th>GST Category</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>GST Number</th>
+                <th>GST Amount</th>
+                <th>Total Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach items="${gsttansaction}" var="transaction">
+                <tr>
+                    <td>${transaction.user.username}</td>
+                    <td>${transaction.gstrate.rate}</td>
+                    <td>${transaction.gstcatagory.catagoryName}</td>
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.date}</td>
+                    <td>${transaction.gstNumber}</td>
+                    <td>${transaction.gstAmount}</td>
+                    <td>${transaction.totalAmount}</td>
+                    <td><a href="/deletetransaction?transactionId=${transaction.transactionId}" class="btn btn-danger">DELETE</a></td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
 
                                             <hr>
                                             <div class="totalamount">
@@ -147,6 +154,17 @@
         </div>
         <!-- page-body-wrapper ends -->
     </div>
-   
+     <script>
+    $(document).ready(function() {
+        $('#transactionTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "lengthChange": true,
+            "autoWidth": false
+        });
+    });
+    </script>
 </body>
 </html>

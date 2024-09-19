@@ -23,35 +23,30 @@
         tr:hover {
             background-color: #f5f5f5;
         }
+        
+          #transactionTable {
+    width: 100%; /* Make the table take up the full width of its container */
+    max-width: 1200px; /* Adjust as needed for your layout */
+    margin: 0 auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Collapse table borders to remove spacing between cells */
+}
+
+#transactionTable th, #transactionTable td {
+    padding: 8px; /* Add padding for readability */
+    text-align: left; /* Align text to the left */
+    border: 1px solid #ddd; /* Add a light border for separation */
+}
     </style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Star Admin2 </title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="asset/vendors/feather/feather.css">
-    <link rel="stylesheet" href="asset/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="asset/vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="asset/vendors/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="asset/vendors/typicons/typicons.css">
-    <link rel="stylesheet" href="asset/vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="asset/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="asset/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
-     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="asset/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="asset/js/select.dataTables.min.css">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <link rel="stylesheet" href="asset/css/style.css">
-    <!-- endinject -->
-    <link rel="shortcut icon" href="asset/images/favicon.png" />
+  
   </head>
   <body class="with-welcome-text">
     <div class="container-scroller">
     
-      
+       <%@include file="bootstraplink.jsp"%>
      <c:if test="${sessionScope.userRole == 'Admin'}">
       <%@include file="NavbarDashbord.jsp" %>
     
@@ -89,7 +84,7 @@
                       
                    
                       <div class="row">
-                       <table>
+                       <table id="transactionTable" class="display">
         <thead>
             <tr>
                 <th>Category Name</th>
@@ -107,13 +102,12 @@
                     
                      <c:if test="${sessionScope.userRole == 'Admin'}">
                       
-                     <td><a href="deletecatagories?id=${c.catagoryId}">DELETE</a> |
+                     <td><a href="deletecatagories?id=${c.catagoryId}" class="btn btn-danger">DELETE</a> |
                      
-                      <a href="editcatagories?id=${c.catagoryId}">EDIT</a>
+                      <a href="editcatagories?id=${c.catagoryId}" class="btn btn-info">EDIT</a>
                      </c:if>
                      
-                     
-                     
+                
                      </td>
                 </tr>
             </c:forEach>
@@ -141,27 +135,6 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="vendors/js/vendor.bundle.base.js"></script>
-    <script src="asset/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="asset/vendors/chart.js/chart.umd.js"></script>
-    <script src="asset/vendors/progressbar.js/progressbar.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="asset/js/off-canvas.js"></script>
-    <script src="asset/js/template.js"></script>
-    <script src="asset/js/settings.js"></script>
-    <script src="asset/js/hoverable-collapse.js"></script>
-    <script src="asset/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
-    <script src="asset/js/jquery.cookie.js" type="text/javascript"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="asset/js/dashboard.js"></script>
-    <!-- <script src="asset/js/Chart.roundedBarCharts.js"></script> -->
-    <!-- End custom js for this page-->
+   
   </body>
 </html>

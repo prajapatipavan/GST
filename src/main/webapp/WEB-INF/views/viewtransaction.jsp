@@ -65,6 +65,20 @@ tr:hover {
 	position: relative;
 	left: 75%;
 }
+
+  #transactionTable {
+    width: 100%; /* Make the table take up the full width of its container */
+    max-width: 1200px; /* Adjust as needed for your layout */
+    margin: 0 auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Collapse table borders to remove spacing between cells */
+}
+
+#transactionTable th, #transactionTable td {
+    padding: 8px; /* Add padding for readability */
+    text-align: left; /* Align text to the left */
+    border: 1px solid #ddd; /* Add a light border for separation */
+}
+
 </style>
 
 </head>
@@ -87,7 +101,7 @@ tr:hover {
 						<div class="col-sm-12">
 							<div class="home-tab">
 								<div
-									class="d-sm-flex align-items-center justify-content-between border-bottom">
+									class="d-sm-flex a$lign-items-center justify-content-between border-bottom">
 									<ul class="nav nav-tabs" role="tablist">
 										<li class="nav-item"><a class="nav-link active ps-0"
 											id="home-tab" data-bs-toggle="tab" href="#overview"
@@ -108,13 +122,22 @@ tr:hover {
 
 											<h4>All Transaction: ${puser.username}(UserId:${selectedUserId})</h4>
 
-                                         
-
+ 
+                                        <form action="viewtransaction" method="get">
+                                             <select name="userId"  required onchange="this.form.submit()" >
+                                            
+                                                <c:forEach items="${pusers}" var="u">
+                                             
+                                                <option value="${u.userId}">${u.username}</option>
+                                             </c:forEach>
+                                             </select>
+</form>
 										</div>
 
 
+               
 
-										<table>
+										<table id="transactionTable" class="display">
 											<thead>
 												<tr>
 
@@ -132,7 +155,7 @@ tr:hover {
 											</thead>
 											<tbody>
 												<c:forEach items="${gstfiltertransaction}" var="transaction">
-												 <c:if test="${transaction.active == true}">
+												
 													<tr>
 													
 														<td>${transaction.user.username}</td>
@@ -144,10 +167,11 @@ tr:hover {
 														<td>${transaction.gstAmount}</td>
 														<td>${transaction.totalAmount}</td>
 
-														<td><a
-															href="deletetransaction?transactionId=${transaction.transactionId}">DETELE</a></td>
+														<td>
+															<a href="/deletetransactions?transactionId=${transaction.transactionId}&userId=${selectedUserId}" class="btn btn-danger">Delete</a>
+														</td>
 													</tr>
-													</c:if>
+											
 												</c:forEach>
 											</tbody>
 										</table>

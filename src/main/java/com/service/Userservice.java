@@ -9,52 +9,45 @@ import org.springframework.stereotype.Service;
 import com.Entity.GstCategoryEntity;
 import com.Entity.UserEntity;
 import com.Repositry.UserRepositry;
+import com.factory.RepositoryFactory;
 
 @Service
 public class Userservice {
-	
-	
+
 	@Autowired
-	UserRepositry userRepo;
-	
-	
+	RepositoryFactory factoryrepo;
+
 	public UserEntity saveuser(UserEntity user) {
-		
-		   return  userRepo.save(user);
-	}
-	
-	
-	public UserEntity  findUserByEmail(String email) {
-		
-		return userRepo.findByEmail(email);
-	}
-	
-	
-	 
-	
-	
-	 public List<UserEntity> listUsers(UserEntity loggedUser) {
-	        List<UserEntity> allActiveUsers = userRepo.findByActiveTrue();
-	        
-	        return allActiveUsers.stream()
-	                .filter(user -> !user.getUserId().equals(loggedUser.getUserId()))
-	                .collect(Collectors.toList());
-	    }
-	
-	
-	public UserEntity deleteuser(Integer userId) {
-	    UserEntity user = userRepo.findById(userId).orElse(null);
-	   
-	    return user;
-	}
-	
-	public void saveUser(UserEntity user) {
-	    userRepo.save(user);
-	}
-	
-	public List<UserEntity> Listuser(){
-		
-		return userRepo.findByActiveTrue();
+
+		return factoryrepo.getUserRepo().save(user);
 	}
 
+	public UserEntity findUserByEmail(String email) {
+
+		return factoryrepo.getUserRepo().findByEmail(email);
+	}
+
+	public List<UserEntity> listUsers(UserEntity loggedUser) {
+		List<UserEntity> allActiveUsers = factoryrepo.getUserRepo().findByActiveTrue();
+
+		return allActiveUsers.stream().filter(user -> !user.getUserId().equals(loggedUser.getUserId()))
+				.collect(Collectors.toList());
+	}
+
+	public UserEntity deleteuser(Integer userId) {
+		UserEntity user = factoryrepo.getUserRepo().findById(userId).orElse(null);
+
+		return user;
+	}
+
+	public void saveUser(UserEntity user) {
+		factoryrepo.getUserRepo().save(user);
+	}
+
+	public List<UserEntity> Listuser() {
+
+		return factoryrepo.getUserRepo().findByActiveTrue();
+	}
+
+	
 }

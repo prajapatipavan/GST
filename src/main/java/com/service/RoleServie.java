@@ -8,27 +8,28 @@ import org.springframework.stereotype.Service;
 import com.Entity.RoleEntity;
 import com.Entity.UserEntity;
 import com.Repositry.RoleRepositry;
+import com.factory.RepositoryFactory;
 
 @Service
 public class RoleServie {
 	
-	  @Autowired
-	  RoleRepositry rolerepo; 
+	@Autowired
+	RepositoryFactory factoryrepo;
 	  
 	  
 	    public List<RoleEntity> listofrole() {
 	    	
 	    	 
-               return  rolerepo.findAll();
+               return factoryrepo.getRolerepo().findAll();
 	    }
 	  
 	  
 	   public RoleEntity saverole(RoleEntity user) {
 		   
-		   return rolerepo.save(user);
+		   return factoryrepo.getRolerepo().save(user);
 	   }
 	   
 	   public RoleEntity getRoleById(Integer roleId) {
-	        return rolerepo.findByroleId(roleId);
+	        return factoryrepo.getRolerepo().findByroleId(roleId);
 	    }
 }
