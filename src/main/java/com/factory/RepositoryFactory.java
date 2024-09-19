@@ -1,21 +1,36 @@
 package com.factory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import com.Repositry.GstInvoiceRepositry;
+import com.Repositry.GstRateRepositry;
+import com.Repositry.GstTransactionReositry;
+import com.Repositry.GstcatagoryRepositry;
+import com.Repositry.RoleRepositry;
+import com.Repositry.UserRepositry;
+
+import lombok.Getter;
 
 @Component
+@Getter
 public class RepositoryFactory {
 
-    private final Map<Class<?>, Object> repositories = new ConcurrentHashMap<>();
+	@Autowired
+	private GstTransactionReositry gstTransaction;
 
-    public RepositoryFactory(Map<Class<?>, Object> repositoryMap) {
-        this.repositories.putAll(repositoryMap);
-    }
+	@Autowired
+	private GstcatagoryRepositry gstcatrepo;
 
-    @SuppressWarnings("unchecked")
-	public <T> T getRepository(Class<T> repositoryClass) {
-        return (T) repositories.get(repositoryClass);
-    }
+	@Autowired
+	private GstInvoiceRepositry gstinvoicerepo;
+
+	@Autowired
+	private GstRateRepositry gstraterepo;
+
+	@Autowired
+	private RoleRepositry rolerepo;
+
+	@Autowired
+	private UserRepositry userRepo;
 }

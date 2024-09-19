@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Entity.GstTransaction;
+import com.factory.ServiceFactory;
 import com.service.GstTransactionservice;
 
 @Controller
 public class aboutcontroller {
 	
-	   @Autowired
-	   GstTransactionservice gsttransactionservice;
+    
+	 @Autowired
+	 ServiceFactory servicefactory;
 	
 	@GetMapping("about")
 	public String about() {
@@ -28,7 +30,7 @@ public class aboutcontroller {
 	@GetMapping("disactivatetransactionlist")
 	public String disactivatetransactionlist(Model model) {
 		
-        List<GstTransaction>	gstdisactiveTransaction	 = gsttransactionservice.ListdisactiveTransaction();
+        List<GstTransaction>	gstdisactiveTransaction	 =servicefactory.getGsttransactionservice().ListdisactiveTransaction();
 		model.addAttribute("distransaction", gstdisactiveTransaction);                 
 		
 		return "disactivatelist/disactivatetransactionlist";
@@ -37,12 +39,12 @@ public class aboutcontroller {
 	@GetMapping("activatetransation")
 	public String activatetransation(@RequestParam("transactionId") Integer transactionId, Model model) {
 		
-		GstTransaction gsttransaction = gsttransactionservice.deleteTransaction(transactionId);
+		GstTransaction gsttransaction = servicefactory.getGsttransactionservice().deleteTransaction(transactionId);
 
 		if (gsttransaction != null) {
 
 			gsttransaction.setActive(true);
-			gsttransactionservice.savedeletetransacion(gsttransaction);
+			servicefactory.getGsttransactionservice().savedeletetransacion(gsttransaction);
 
 		}
 		
@@ -53,7 +55,7 @@ public class aboutcontroller {
 	@GetMapping("disactivateuserlist")
 	public String disactivateuserlist(Model model) {
 		
-        List<GstTransaction>	gstdisactiveTransaction	 = gsttransactionservice.ListdisactiveTransaction();
+        List<GstTransaction>	gstdisactiveTransaction	 = servicefactory.getGsttransactionservice().ListdisactiveTransaction();
 		model.addAttribute("distransaction", gstdisactiveTransaction);                 
 		
 		return "disactivatelist/disactivatetransactionlist";

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.Entity.RoleEntity;
 import com.Entity.UserEntity;
 import com.Repositry.RoleRepositry;
+import com.factory.ServiceFactory;
 import com.service.Mailservice;
 import com.service.RoleServie;
 import com.service.Userservice;
@@ -23,14 +24,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class Usercontroller {
 	
-	@Autowired
-	Userservice userservice;
-	
-	@Autowired
-	RoleServie roleservice;
-	
-	@Autowired
-	BCryptPasswordEncoder passencode;
+	 @Autowired
+	 ServiceFactory servicefactory;
 	
 	@Autowired
 	Mailservice mailservice;
@@ -39,7 +34,7 @@ public class Usercontroller {
 	public String createUser(Model model) {
 		
 		
-		 List<RoleEntity> listrole = roleservice.listofrole();
+		 List<RoleEntity> listrole =servicefactory.getRoleservice().listofrole();
 		  model.addAttribute("listrole", listrole); 
 		return "user";
 	}
@@ -51,13 +46,13 @@ public class Usercontroller {
 	redirectAttributes.addFlashAttribute("addusermsg", "User Add Sucessfully!!!");
 	
 	 String plaintext =user.getPassword();
-     String encodepass =passencode.encode(plaintext);
+     String encodepass =servicefactory.getPassencode().encode(plaintext);
      
      user.setPassword(encodepass);
      
 		/* mailservice.sendmessagemail(user.getEmail(),user.getUsername(),plaintext); */
 		 
-	     userservice.saveuser(user);
+	    servicefactory.getUserservice().saveuser(user);
 		
 		return "redirect:/Adduser";
 	}
@@ -66,7 +61,7 @@ public class Usercontroller {
 	public String listuser(Model model,UserEntity user,HttpSession session) {
 		 UserEntity loggeduser = (UserEntity) session.getAttribute("logginuser");
 		
-		   List<UserEntity> listuser = userservice.listUsers(loggeduser);
+		   List<UserEntity> listuser =servicefactory.getUserservice().listUsers(loggeduser);
 		   model.addAttribute("listuser",listuser);
 		
 		return "Listuser";
@@ -90,16 +85,16 @@ public class Usercontroller {
 	    }
 	    
 	    
-	                  UserEntity  deleteduser = userservice.deleteuser(userId);
+	                  UserEntity  deleteduser =servicefactory.getUserservice().deleteuser(userId);
 	                  
 	                  if(deleteduser !=null) {
 	                	  
 	                	  
 	                	       deleteduser.setActive(false);
-	                	       userservice.saveuser(deleteduser);
+	                	       servicefactory.getUserservice().saveuser(deleteduser);
 	                  }
 	    
 	    return "redirect:/listuser";
 	}
-
+	
 }

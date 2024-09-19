@@ -8,22 +8,23 @@ import org.springframework.stereotype.Service;
 
 import com.Entity.GstCategoryEntity;
 import com.Repositry.GstcatagoryRepositry;
+import com.factory.RepositoryFactory;
 
 @Service
 public class GstCategoryService {
 	
 	@Autowired
-	GstcatagoryRepositry gstcatrepo;
+	RepositoryFactory factoryrepo;
 	
 	
 	public GstCategoryEntity addcatogory(GstCategoryEntity catagory) {
 		
-		return gstcatrepo.save(catagory);
+		return  factoryrepo.getGstcatrepo().save(catagory);
 	}
 	
 	public List<GstCategoryEntity> Listcategory(){
 	
-		return gstcatrepo.findAll();
+		return factoryrepo.getGstcatrepo().findAll();
 	}
 
 	

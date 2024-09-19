@@ -11,31 +11,32 @@ import com.Entity.GstRateEntity;
 import com.Entity.GstTransaction;
 import com.Repositry.GstInvoiceRepositry;
 import com.Repositry.GstRateRepositry;
+import com.factory.RepositoryFactory;
 
 @Service
 public class GstRateService {
 	
 	@Autowired
-	GstRateRepositry gstraterepo;;
+	RepositoryFactory factoryrepo;
 	
   public GstRateEntity addrate(GstRateEntity rate) {
 		
-		return gstraterepo.save(rate);
+		return factoryrepo.getGstraterepo().save(rate);
 	}
   
     
   public List<GstRateEntity> Listgstrate(){
 		
-	  return gstraterepo.findByActiveTrue();
+	  return factoryrepo.getGstraterepo().findByActiveTrue();
 	}
   
   public GstRateEntity getGstRateById(Integer rateId) {
-	    return gstraterepo.findById(rateId).orElse(null);
+	    return factoryrepo.getGstraterepo().findById(rateId).orElse(null);
 	}
 
 	
   public void saveGstRate(GstRateEntity gstrate) {
-	    gstraterepo.save(gstrate);
+	  factoryrepo.getGstraterepo().save(gstrate);
 	}
 
 }

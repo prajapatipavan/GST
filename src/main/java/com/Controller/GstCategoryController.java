@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.Entity.GstCategoryEntity;
+import com.factory.ServiceFactory;
 import com.service.GstCategoryService;
 
 @Controller
 public class GstCategoryController {
 	
-	@Autowired
-	GstCategoryService gstcatservice;
+    
+	 @Autowired
+	 ServiceFactory servicefactory;
 	
 	@GetMapping("addgstcategory")
 	public String gstCategoryController() {
@@ -27,14 +29,14 @@ public class GstCategoryController {
 	@PostMapping("createGSTCategory")
 	public String createGSTCategory(GstCategoryEntity catagory) {
 		
-		  gstcatservice.addcatogory(catagory);
+		  servicefactory.getGstcatagory().addcatogory(catagory);
 		
 		return "redirect:/addgstcategory";
 	}
 	
 	@GetMapping("listcatagory")
 	public String listcatagory(Model model) {
-	 List<GstCategoryEntity> gstcatagory= gstcatservice.Listcategory();
+	 List<GstCategoryEntity> gstcatagory=  servicefactory.getGstcatagory().Listcategory();
 	  model.addAttribute("gstcatgory",gstcatagory);
 		return "ListCatagory";
 	}

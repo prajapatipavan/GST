@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.Entity.GstTransaction;
 import com.Entity.UserEntity;
+import com.factory.ServiceFactory;
 import com.service.Userservice;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,11 +18,9 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class sessionController {
 
-	@Autowired
-	Userservice userservice;
 	
-	@Autowired
-	BCryptPasswordEncoder passencode;
+	 @Autowired
+	 ServiceFactory servicefactory;
 
 	@GetMapping("login")
 	public String login() {
@@ -33,9 +32,9 @@ public class sessionController {
 	public String Authenticate(HttpSession session, UserEntity user,HttpServletResponse response) {
 		
 
-		UserEntity loggeduser = userservice.findUserByEmail(user.getEmail());
+		UserEntity loggeduser =servicefactory.getUserservice().findUserByEmail(user.getEmail());
 		 
-	     Boolean passwordlogg = passencode.matches(user.getPassword(),loggeduser.getPassword());    
+	     Boolean passwordlogg =servicefactory.getPassencode().matches(user.getPassword(),loggeduser.getPassword());    
 	
 	               
 		session.setAttribute("logginuser", loggeduser);

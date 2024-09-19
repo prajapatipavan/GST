@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Entity.RoleEntity;
+import com.factory.ServiceFactory;
 import com.service.RoleServie;
 
 
@@ -18,7 +19,7 @@ import com.service.RoleServie;
 public class Rolecontroller  {
 	
 	 @Autowired
-	 RoleServie roleservice;
+	 ServiceFactory servicefactory;
 	
 	@GetMapping("/role")
 	public String rolecreate(Model model) {
@@ -35,7 +36,7 @@ public class Rolecontroller  {
 	@PostMapping("saverole")
 	public String saverole(RedirectAttributes redirectAttributes,RoleEntity role) {
 		
-		roleservice.saverole(role);  
+		servicefactory.getRoleservice().saverole(role);  
 		
 		redirectAttributes.addFlashAttribute("roleaddmsg","ROLE ADD SUCESSFULLY!!");
 		

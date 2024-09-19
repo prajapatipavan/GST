@@ -10,43 +10,61 @@ import org.springframework.stereotype.Service;
 import com.Entity.GstTransaction;
 
 import com.Repositry.GstTransactionReositry;
+import com.factory.RepositoryFactory;
 
 @Service
 public class GstTransactionservice {
 	
 	@Autowired
-	GstTransactionReositry gstTransaction;
+	RepositoryFactory factoryrepo;
 
 	public GstTransaction createtransaction(GstTransaction transaction) {
 
-		return gstTransaction.save(transaction);
+		return factoryrepo.getGstTransaction().save(transaction);
 	}
 
 	public List<GstTransaction> ListTransaction() {
 
-		return gstTransaction.findByUserActiveTrue();
+		return factoryrepo.getGstTransaction().findByUserActiveTrue();
 	}
 	
 	
 	public List<GstTransaction> ListdisactiveTransaction() {
 
-		return gstTransaction.findAll();
+		return factoryrepo.getGstTransaction().findAll();
 	}
 
 	public GstTransaction deleteTransaction(Integer transactionId) {
 
-		GstTransaction trasaction = gstTransaction.findById(transactionId).orElse(null);
+		GstTransaction trasaction = factoryrepo.getGstTransaction().findById(transactionId).orElse(null);
 
 		return trasaction;
 	}
 
 	public void savedeletetransacion(GstTransaction gsttransaction) {
 
-		gstTransaction.save(gsttransaction);
+		factoryrepo.getGstTransaction().save(gsttransaction);
 	}
 	
 	public List<GstTransaction> listfilterTransaction(Integer userId) {
-	    return gstTransaction.findByUser_UserId(userId);
+	    return  factoryrepo.getGstTransaction().findByUser_UserId(userId);
+	}
+	
+	public GstTransaction  deleteTransactions(Integer transactionId) {
+		
+		       GstTransaction gst = new GstTransaction();
+		
+		             GstTransaction transaction  = factoryrepo.getGstTransaction().findById(transactionId).get();
+		             
+		                if (transaction!=null) {
+		                	
+		                	transaction.setActive(false);
+		                	factoryrepo.getGstTransaction().save(gst);
+							
+						}
+		             
+		             return transaction;
+		
 	}
 
 

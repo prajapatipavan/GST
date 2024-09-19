@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Entity.GstRateEntity;
 import com.Entity.GstTransaction;
+import com.factory.ServiceFactory;
 import com.service.GstRateService;
 
 import jakarta.servlet.http.HttpSession;
@@ -19,8 +20,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class GstRateController {
 	
-	@Autowired
-	GstRateService gstrateservice;
+	 @Autowired
+	 ServiceFactory servicefactory;
 	
 	@GetMapping("addgstrate")
 	public String Addgstrate() {
@@ -31,7 +32,7 @@ public class GstRateController {
 	@PostMapping("createGSTRate")
 	public String createGSTrate(GstRateEntity gstrate) {
 		
-		gstrateservice.addrate(gstrate);
+		servicefactory.getGstrate().addrate(gstrate);
 		
 		return "redirect:/addgstrate";
 	}
@@ -39,7 +40,7 @@ public class GstRateController {
 	
 	@GetMapping("listrate")
 	public String listgstrate(Model model) {
-	 List<GstRateEntity> gstrate= gstrateservice.Listgstrate();
+	 List<GstRateEntity> gstrate= servicefactory.getGstrate().Listgstrate();
 	  model.addAttribute("gstrate",gstrate);
 		return "ListRate";
 	}
@@ -49,11 +50,11 @@ public class GstRateController {
 	public String deleteRates(@RequestParam("rateId") Integer rateId, HttpSession session,
 	        RedirectAttributes redirectAttributes) {
 
-	    GstRateEntity gstrateentity = gstrateservice.getGstRateById(rateId);
+	    GstRateEntity gstrateentity = servicefactory.getGstrate().getGstRateById(rateId);
 
 	    if (gstrateentity != null) {
 	        gstrateentity.setActive(false);
-	        gstrateservice.saveGstRate(gstrateentity);
+	        servicefactory.getGstrate().saveGstRate(gstrateentity);
 	    }
 
 	    return "redirect:/listrate";

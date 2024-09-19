@@ -16,6 +16,9 @@ public interface UserRepositry extends JpaRepository<UserEntity,Integer>{
 
 	List<UserEntity> findByActiveTrue();
 
+	
+	
+
 
 
 
