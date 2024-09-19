@@ -12,9 +12,8 @@ public interface UserRepositry extends JpaRepository<UserEntity,Integer>{
 
 	List<UserEntity> findByuserId(Integer userId);
 
-	 
-
 	List<UserEntity> findByActiveTrue();
+	
 
 	
 	
