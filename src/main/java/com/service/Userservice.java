@@ -6,48 +6,74 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.Entity.GstCategoryEntity;
 import com.Entity.UserEntity;
-import com.Repositry.UserRepositry;
+import com.dto.Userdto;
 import com.factory.RepositoryFactory;
 
 @Service
 public class Userservice {
 
-	@Autowired
-	RepositoryFactory factoryrepo;
+    @Autowired
+    RepositoryFactory factoryrepo;
 
-	public UserEntity saveuser(UserEntity user) {
+   
+    public Userdto saveUser(Userdto userdto) {
+        UserEntity userEntity = userdtoToUserEntity(userdto); 
+        UserEntity savedUser = factoryrepo.getUserRepo().save(userEntity); 
+        return userToUserdto(savedUser); 
+    }
 
-		return factoryrepo.getUserRepo().save(user);
-	}
+    
+    public Userdto findUserByEmail(String email) {
+        UserEntity userEntity = factoryrepo.getUserRepo().findByEmail(email);
+        return userToUserdto(userEntity); 
+    }
 
-	public UserEntity findUserByEmail(String email) {
 
-		return factoryrepo.getUserRepo().findByEmail(email);
-	}
+    public List<Userdto> listUsers(Userdto loggedUserDto) {
+        UserEntity loggedUserEntity = userdtoToUserEntity(loggedUserDto); 
+        List<UserEntity> allActiveUsers = factoryrepo.getUserRepo().findByActiveTrue();
 
-	public List<UserEntity> listUsers(UserEntity loggedUser) {
-		List<UserEntity> allActiveUsers = factoryrepo.getUserRepo().findByActiveTrue();
+        return allActiveUsers.stream()
+                .filter(user -> !user.getUserId().equals(loggedUserEntity.getUserId()))
+                .map(this::userToUserdto) 
+                .collect(Collectors.toList());
+    }
 
-		return allActiveUsers.stream().filter(user -> !user.getUserId().equals(loggedUser.getUserId()))
-				.collect(Collectors.toList());
-	}
+ 
+    public Userdto deleteUser(Integer userId) {
+        UserEntity userEntity = factoryrepo.getUserRepo().findById(userId).orElse(null);
 
-	public UserEntity deleteuser(Integer userId) {
-		UserEntity user = factoryrepo.getUserRepo().findById(userId).orElse(null);
+        if (userEntity != null) {
+            factoryrepo.getUserRepo().delete(userEntity);
+        }
 
-		return user;
-	}
+        return userToUserdto(userEntity);
+    }
 
-	public void saveUser(UserEntity user) {
-		factoryrepo.getUserRepo().save(user);
-	}
-
-	public List<UserEntity> Listuser() {
+   
+    public List<Userdto> listAllActiveUsers() {
+        List<UserEntity> activeUsers = factoryrepo.getUserRepo().findByActiveTrue();
+        return activeUsers.stream()
+                .map(this::userToUserdto) 
+                .collect(Collectors.toList());
+    }
+    
+    
+    public List<UserEntity> Listuser() {
 
 		return factoryrepo.getUserRepo().findByActiveTrue();
 	}
+
+   
+    public UserEntity userdtoToUserEntity(Userdto userdto) {
+        return this.factoryrepo.getModelmapper().map(userdto, UserEntity.class);
+    }
+
+    public Userdto userToUserdto(UserEntity userEntity) {
+        return this.factoryrepo.getModelmapper().map(userEntity, Userdto.class);
+    }
+
 
 	
 }

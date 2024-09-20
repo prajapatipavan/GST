@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.Entity.GstTransaction;
 import com.Entity.UserEntity;
+import com.dto.GstTransactiondto;
+import com.dto.Userdto;
 import com.factory.ServiceFactory;
 import com.service.Userservice;
 
@@ -18,9 +20,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class sessionController {
 
-	
-	 @Autowired
-	 ServiceFactory servicefactory;
+	@Autowired
+	ServiceFactory servicefactory;
 
 	@GetMapping("login")
 	public String login() {
@@ -29,27 +30,27 @@ public class sessionController {
 	}
 
 	@PostMapping("Authenticate")
-	public String Authenticate(HttpSession session, UserEntity user,HttpServletResponse response) {
+	public String Authenticate(HttpSession session, UserEntity user, HttpServletResponse response) {
+
+		Userdto loggeduser = servicefactory.getUserservice().findUserByEmail(user.getEmail());
+		         
+		  
+		
 		
 
-		UserEntity loggeduser =servicefactory.getUserservice().findUserByEmail(user.getEmail());
-		 
-	     Boolean passwordlogg =servicefactory.getPassencode().matches(user.getPassword(),loggeduser.getPassword());    
-	
-	               
+		Boolean passwordlogg = servicefactory.getPassencode().matches(user.getPassword(), loggeduser.getPassword());
+
 		session.setAttribute("logginuser", loggeduser);
-		 session.setAttribute("userRole", loggeduser.getRole().getRoleName());
+		session.setAttribute("userRole", loggeduser.getRole().getRoleName());
 
-		
-
-		if (loggeduser == null || passwordlogg==false || loggeduser.getActive()==false) {
+		if (loggeduser == null || passwordlogg == false || loggeduser.getActive() == false) {
 
 			return "login";
 
 		} else if (loggeduser.getRole().getRoleId() == 1) {
 			session.setAttribute("logginuser", loggeduser);
-		
-			 return "Admin";
+
+			return "Admin";
 
 		} else if (loggeduser.getRole().getRoleId() == 2) {
 			session.setAttribute("logginuser", loggeduser);
@@ -62,20 +63,18 @@ public class sessionController {
 		}
 
 	}
-	
-	
+
 	@GetMapping("admindashbord")
 	public String admindashbord() {
-		
+
 		return "Admin";
 	}
-	
+
 	@GetMapping("logout")
-	public String logout(HttpSession session,HttpServletResponse response) {
-		
-		 session.invalidate();
-		
-		
+	public String logout(HttpSession session, HttpServletResponse response) {
+
+		session.invalidate();
+
 		return "redirect:/login";
 	}
 

@@ -1,13 +1,13 @@
 package com.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Entity.RoleEntity;
-import com.Entity.UserEntity;
-import com.Repositry.RoleRepositry;
+import com.dto.Roledto;
 import com.factory.RepositoryFactory;
 
 @Service
@@ -17,19 +17,40 @@ public class RoleServie {
 	RepositoryFactory factoryrepo;
 	  
 	  
-	    public List<RoleEntity> listofrole() {
+	    public List<Roledto> listofrole() {
 	    	
 	    	 
-               return factoryrepo.getRolerepo().findAll();
+             List<RoleEntity> roleentity  = factoryrepo.getRolerepo().findAll();
+             
+             return roleentity.stream().map(this:: roleEntityToRoleDto).collect(Collectors.toList());
 	    }
 	  
 	  
-	   public RoleEntity saverole(RoleEntity user) {
+	   public RoleEntity saveRole(Roledto user) {
 		   
-		   return factoryrepo.getRolerepo().save(user);
+		         RoleEntity users = roleDtoToRoleEntity(user);    
+		   
+		   return factoryrepo.getRolerepo().save(users);
 	   }
 	   
-	   public RoleEntity getRoleById(Integer roleId) {
-	        return factoryrepo.getRolerepo().findByroleId(roleId);
+	   public Roledto getRoleById(Integer roleId) {
+	        RoleEntity roleentity = factoryrepo.getRolerepo().findByroleId(roleId);
+	        return roleEntityToRoleDto(roleentity);
 	    }
+	   
+	   
+	   public RoleEntity  roleDtoToRoleEntity(Roledto roledto) {
+		   
+		       RoleEntity roleentity = factoryrepo.getModelmapper().map(roledto,RoleEntity.class);
+		       
+		       return roleentity;
+	   }
+	   
+	   public Roledto  roleEntityToRoleDto(RoleEntity roleEntity) {
+		   
+	       Roledto roledto = factoryrepo.getModelmapper().map(roleEntity,Roledto.class);
+	       
+	       return roledto;
+   }
+	   
 }

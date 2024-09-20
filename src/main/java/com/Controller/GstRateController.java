@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Entity.GstRateEntity;
 import com.Entity.GstTransaction;
+import com.dto.GstRatedto;
 import com.factory.ServiceFactory;
 import com.service.GstRateService;
 
@@ -30,7 +31,7 @@ public class GstRateController {
 	}
 
 	@PostMapping("createGSTRate")
-	public String createGSTrate(GstRateEntity gstrate) {
+	public String createGSTrate(GstRatedto gstrate) {
 		
 		servicefactory.getGstrate().addrate(gstrate);
 		
@@ -40,7 +41,7 @@ public class GstRateController {
 	
 	@GetMapping("listrate")
 	public String listgstrate(Model model) {
-	 List<GstRateEntity> gstrate= servicefactory.getGstrate().Listgstrate();
+	 List<GstRatedto> gstrate= servicefactory.getGstrate().Listgstrate();
 	  model.addAttribute("gstrate",gstrate);
 		return "ListRate";
 	}
@@ -50,7 +51,7 @@ public class GstRateController {
 	public String deleteRates(@RequestParam("rateId") Integer rateId, HttpSession session,
 	        RedirectAttributes redirectAttributes) {
 
-	    GstRateEntity gstrateentity = servicefactory.getGstrate().getGstRateById(rateId);
+	    GstRatedto gstrateentity = servicefactory.getGstrate().getGstRateById(rateId);
 
 	    if (gstrateentity != null) {
 	        gstrateentity.setActive(false);

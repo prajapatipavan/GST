@@ -86,14 +86,15 @@
                                         <div class="row">
                                             <h1>Transaction</h1>
  
-                                            <form action="viewtransaction" method="get">
-                                                <label for="user">User:</label> 
-                                                <select id="user" name="userId" required onchange="this.form.submit()">
-                                                    <c:forEach items="${puser}" var="user">
-                                                        <option value="${user.userId}">${user.username}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </form>
+                                         <form action="viewtransaction" method="get">
+    <label for="user">User:</label> 
+    <select id="user" name="userId" required onchange="this.form.submit()">
+        <option value="">-- Select a User --</option> <!-- Placeholder -->
+        <c:forEach items="${puser}" var="user">
+            <option value="${user.userId}">${user.username}</option>
+        </c:forEach>
+    </select>
+</form>
 
                                         <table id="transactionTable" class="display">
         <thead>

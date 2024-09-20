@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.Entity.GstCategoryEntity;
+import com.dto.GstCategorydto;
 import com.factory.ServiceFactory;
 import com.service.GstCategoryService;
 
@@ -27,7 +28,7 @@ public class GstCategoryController {
 
 	
 	@PostMapping("createGSTCategory")
-	public String createGSTCategory(GstCategoryEntity catagory) {
+	public String createGSTCategory(GstCategorydto catagory) {
 		
 		  servicefactory.getGstcatagory().addcatogory(catagory);
 		
@@ -36,7 +37,7 @@ public class GstCategoryController {
 	
 	@GetMapping("listcatagory")
 	public String listcatagory(Model model) {
-	 List<GstCategoryEntity> gstcatagory=  servicefactory.getGstcatagory().Listcategory();
+	 List<GstCategorydto> gstcatagory=  servicefactory.getGstcatagory().listCategory();
 	  model.addAttribute("gstcatgory",gstcatagory);
 		return "ListCatagory";
 	}

@@ -2,11 +2,13 @@ package com.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
 import com.Entity.GstInvoicEntity;
+import com.dto.Userdto;
 import com.factory.ServiceFactory;
 
 
@@ -17,9 +19,12 @@ public class GstInvoicecontroller{
 	 ServiceFactory servicefactory;
 	
 	@GetMapping("addgstinvoice")
-	public String Addgstrate() {
+	public String Addgstrate(Integer userId,Model model) {
 		
-		return "AddGstRate";
+		    Userdto user  = servicefactory.getGstinvoiceservice().userDeatails(userId);
+		    model.addAttribute("userd",user);
+		
+		return "AddgstInvoice";
 	}
 
 	
@@ -30,4 +35,7 @@ public class GstInvoicecontroller{
 		
 		return "redirect:/addgstinvoice";
 	}
+	
+	
+	
 }

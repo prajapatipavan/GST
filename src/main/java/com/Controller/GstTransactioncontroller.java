@@ -8,20 +8,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Entity.GstCategoryEntity;
-import com.Entity.GstRateEntity;
+
 import com.Entity.GstTransaction;
 import com.Entity.UserEntity;
+import com.dto.GstCategorydto;
+import com.dto.GstRatedto;
+import com.dto.GstTransactiondto;
 
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-
 public class GstTransactioncontroller  {
 
 	      
@@ -31,11 +33,11 @@ public class GstTransactioncontroller  {
 	@GetMapping("/addgstTransaction")
 	public String addGstTransaction(Model model, HttpSession session) {
 
-		List<GstRateEntity> gstrates =servicefactory.getGstrate().Listgstrate();
+		List<GstRatedto> gstrates =servicefactory.getGstrate().Listgstrate();
 		model.addAttribute("gstrates", gstrates);
 		
 	             
-		List<GstCategoryEntity> gstCategories =servicefactory.getGstcatagory().Listcategory();
+		List<GstCategorydto> gstCategories =servicefactory.getGstcatagory().listCategory();
 		model.addAttribute("gstCategories", gstCategories);
 
 		UserEntity user = (UserEntity) session.getAttribute("logginuser");
@@ -53,9 +55,9 @@ public class GstTransactioncontroller  {
 	}
 
 	@PostMapping("createTransaction")
-	public String createGSTtransaction(GstTransaction gsttransaction, HttpSession session) {
+	public String createGSTtransaction(GstTransactiondto gsttransaction, HttpSession session) {
 
-		servicefactory.getGsttransactions().createtransaction(gsttransaction);
+		servicefactory.getGsttransactions().createTransaction(gsttransaction);
 
 		return "redirect:/addgstTransaction";
 	}
@@ -67,7 +69,7 @@ public class GstTransactioncontroller  {
 		model.addAttribute("puser", puser);
 		
 		
-		List<GstTransaction> gsttansaction =servicefactory.getGsttransactions().ListTransaction();
+		List<GstTransactiondto> gsttansaction =servicefactory.getGsttransactions().ListTransaction();
 		
 		 double totalAmount = gsttansaction.stream()
 			        .mapToDouble(transaction -> {
@@ -104,12 +106,12 @@ public class GstTransactioncontroller  {
 	public String deletetransaction(@RequestParam("transactionId") Integer transactionId, HttpSession session,
 			RedirectAttributes redirectAttributes) {
 
-		GstTransaction gsttransaction =servicefactory.getGsttransactions().deleteTransaction(transactionId);
+		GstTransactiondto gsttransaction =servicefactory.getGsttransactions().deleteTransaction(transactionId);
 
 		if (gsttransaction != null) {
 
 			gsttransaction.setActive(false);
-			servicefactory.getGsttransactions().savedeletetransacion(gsttransaction);
+			servicefactory.getGsttransactions().saveDeleteTransacion(gsttransaction);
 
 		}
 
@@ -121,8 +123,8 @@ public class GstTransactioncontroller  {
 	public String viewtransaction(@RequestParam("userId") Integer userId, Model model) {
 
 	    
-	    List<GstTransaction> gstFilterTransaction = servicefactory.getGsttransactions()
-	            .listfilterTransaction(userId).stream().filter(GstTransaction::getActive).toList();
+	    List<GstTransactiondto> gstFilterTransaction = servicefactory.getGsttransactions()
+	            .listFilterTransaction(userId).stream().filter(GstTransactiondto::getActive).toList();
 	            
 
 	    model.addAttribute("gstfiltertransaction", gstFilterTransaction);
@@ -151,11 +153,9 @@ public class GstTransactioncontroller  {
 	@GetMapping("deletetransactions")
 	public String deletetransactions(@RequestParam("transactionId") Integer transactionId,@RequestParam("userId") Integer userId) {
 		
-		
 		     servicefactory.getGsttransactionservice().deleteTransactions(transactionId);
 		       
-		
-		return "redirect:/viewtransaction?userId="+userId;
+		  return "redirect:/viewtransaction?userId="+userId;
 	}
 
 }

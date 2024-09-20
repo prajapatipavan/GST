@@ -1,7 +1,10 @@
-package com.Entity;
+package com.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.Entity.GstTransaction;
+import com.Entity.RoleEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -16,14 +19,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "User")
+
+
 @Getter
 @Setter
 @Data
-public class UserEntity {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Userdto {
+	
 	private Integer userId;
 	
 	private String username;
@@ -34,13 +36,9 @@ public class UserEntity {
 	
 	private Boolean active = true;
 	
-  
-    
-	   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	    private GstTransaction gsttrasaction;
+	    
+   private GstTransaction gsttrasaction;
 	
-	@ManyToOne
-	@JoinColumn(name = "role_id")
 	private RoleEntity role;
 
 

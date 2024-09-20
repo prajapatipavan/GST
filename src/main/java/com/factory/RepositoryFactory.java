@@ -1,5 +1,6 @@
 package com.factory;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,4 +34,7 @@ public class RepositoryFactory {
 
 	@Autowired
 	private UserRepositry userRepo;
+	
+	 @Autowired
+	 ModelMapper modelmapper;
 }

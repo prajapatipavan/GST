@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Entity.GstTransaction;
+import com.dto.GstTransactiondto;
 import com.factory.ServiceFactory;
 import com.service.GstTransactionservice;
 
@@ -30,7 +31,7 @@ public class aboutcontroller {
 	@GetMapping("disactivatetransactionlist")
 	public String disactivatetransactionlist(Model model) {
 		
-        List<GstTransaction>	gstdisactiveTransaction	 =servicefactory.getGsttransactionservice().ListdisactiveTransaction();
+        List<GstTransactiondto>	gstdisactiveTransaction	 =servicefactory.getGsttransactionservice().listdisactiveTransaction();
 		model.addAttribute("distransaction", gstdisactiveTransaction);                 
 		
 		return "disactivatelist/disactivatetransactionlist";
@@ -39,12 +40,12 @@ public class aboutcontroller {
 	@GetMapping("activatetransation")
 	public String activatetransation(@RequestParam("transactionId") Integer transactionId, Model model) {
 		
-		GstTransaction gsttransaction = servicefactory.getGsttransactionservice().deleteTransaction(transactionId);
+		GstTransactiondto gsttransaction = servicefactory.getGsttransactionservice().deleteTransaction(transactionId);
 
 		if (gsttransaction != null) {
 
 			gsttransaction.setActive(true);
-			servicefactory.getGsttransactionservice().savedeletetransacion(gsttransaction);
+			servicefactory.getGsttransactionservice().saveDeleteTransacion(gsttransaction);
 
 		}
 		
@@ -55,7 +56,7 @@ public class aboutcontroller {
 	@GetMapping("disactivateuserlist")
 	public String disactivateuserlist(Model model) {
 		
-        List<GstTransaction>	gstdisactiveTransaction	 = servicefactory.getGsttransactionservice().ListdisactiveTransaction();
+        List<GstTransactiondto>	gstdisactiveTransaction	 = servicefactory.getGsttransactionservice().listdisactiveTransaction();
 		model.addAttribute("distransaction", gstdisactiveTransaction);                 
 		
 		return "disactivatelist/disactivatetransactionlist";

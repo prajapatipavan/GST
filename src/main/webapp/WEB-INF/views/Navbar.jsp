@@ -28,6 +28,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/listTransactionLoginUser">Transactions</a>
                 </li>
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="/addgstinvoice?userId=${logginuser.userId}&TransactionId=${logginuser.TransactionId}">Invoice</a>
+                  
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/listrate">Gst Rates</a>
                 </li>

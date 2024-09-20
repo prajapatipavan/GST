@@ -2,6 +2,7 @@ package com.Repositry;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -29,5 +30,8 @@ public interface GstTransactionReositry extends JpaRepository<GstTransaction,Int
     nativeQuery = true)
 	
 	List<GstTransaction> findByUserActiveTrue();
+
+
+	
 
 }
