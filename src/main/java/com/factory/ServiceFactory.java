@@ -7,10 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.Repositry.GstTransactionReositry;
 import com.Repositry.UserRepositry;
+import com.service.CustomerService;
 import com.service.GstCategoryService;
 import com.service.GstInvoicesrvice;
 import com.service.GstRateService;
 import com.service.GstTransactionservice;
+import com.service.ProductService;
 import com.service.RoleServie;
 import com.service.Userservice;
 
@@ -49,6 +51,12 @@ public class ServiceFactory {
 	 
 		@Autowired
 		BCryptPasswordEncoder passencode;
+		
+		@Autowired
+	   private	ProductService productService;
+		
+         @Autowired
+       private CustomerService customerservice;
 
 		
 }

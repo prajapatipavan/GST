@@ -1,28 +1,24 @@
 package com.dto;
 
-import com.Entity.GstTransaction;
+
+
+
+
+
+import com.Entity.UserEntity;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "gst_invoice")
+import lombok.Data;
+
+@Data
 public class GstInvoicdto {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
+	
+	private Integer invoiceId;
 
-	@ManyToOne
-	@JoinColumn(name = "transaction_id")
-	private GstTransaction transaction;
+	
+	private UserEntity user;
 
 	@Column(name = "invoice_number")
 	private String invoiceNumber;
@@ -32,6 +28,12 @@ public class GstInvoicdto {
 
 	@Column(name = "due_date")
 	private String dueDate;
+	
+	
+	private double totalAmount;
+	
 
 	private Boolean active = true;
+
+	
 }

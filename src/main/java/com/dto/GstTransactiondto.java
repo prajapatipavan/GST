@@ -1,6 +1,10 @@
 package com.dto;
+import java.util.List;
+
+import com.Entity.CustomerEntity;
 import com.Entity.GstCategoryEntity;
 import com.Entity.GstRateEntity;
+import com.Entity.ProductEntity;
 import com.Entity.UserEntity;
 
 import jakarta.persistence.Column;
@@ -33,6 +37,9 @@ import lombok.Setter;
 	@ManyToOne
 	private GstCategoryEntity gstcatagory;
 	
+	
+	private List<ProductEntity> products;
+	
 	private Double amount;
 	
 	private String gstNumber;
@@ -42,6 +49,8 @@ import lombok.Setter;
 	private String totalAmount;
 	
 	private String gstAmount;
+	
+	private CustomerEntity  customer;
 	
 	private Boolean active = true;
 }

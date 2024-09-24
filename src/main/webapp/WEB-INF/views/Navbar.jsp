@@ -28,17 +28,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/listTransactionLoginUser">Transactions</a>
                 </li>
-                
-                <li class="nav-item">
-                  <a class="nav-link" href="/addgstinvoice?userId=${logginuser.userId}&TransactionId=${logginuser.TransactionId}">Invoice</a>
-                  
+            
+               <li class="nav-item">
+                    <a class="nav-link" href="/addgstinvoice?userId=${logginuser.userId}&TransactionId=${logginuser.gsttrasaction[0].transactionId}">Invoice</a>
                 </li>
+             
                 <li class="nav-item">
                     <a class="nav-link" href="/listrate">Gst Rates</a>
                 </li>
                 
                 <li class="nav-item">
                     <a class="nav-link" href="/listcatagory">Gst Catagories</a>
+                </li>
+                
+                  <li class="nav-item">
+                    <a class="nav-link" href="/listcustomer">Customer</a>
                 </li>
               
             </ul>
@@ -52,8 +56,11 @@
             </ul>
         </div>
     </nav>
-
   
+
+       
+   
+
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

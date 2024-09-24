@@ -33,6 +33,8 @@ public class sessionController {
 	public String Authenticate(HttpSession session, UserEntity user, HttpServletResponse response) {
 
 		Userdto loggeduser = servicefactory.getUserservice().findUserByEmail(user.getEmail());
+		
+		
 		         
 		  
 		

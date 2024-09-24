@@ -42,39 +42,56 @@
         
         
         <!-- Transactions Table -->
-        <table class="table table-striped">
-            <thead>
+      <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>GST Rate</th>
+            <th>GST Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>GST Number</th>
+            <th>GST Amount</th>
+            <th>Total Amount</th>
+            <th>Product Name</th> 
+            <!-- Changed this to plural to reflect multiple products -->
+            <th>Product price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach items="${gstTransactionList}" var="transaction">
+            <c:if test="${transaction.active == true}">
                 <tr>
-                    <th>User</th>
-                    <th>GST Rate</th>
-                    <th>GST Category</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>GST Number</th>
-                    <th>GST Amount</th>
-                    <th>Total Amount</th>
-                    <th>Action</th>
+                    <td>${transaction.user.username}</td>
+                    <td>${transaction.gstrate.rate}</td>
+                    <td>${transaction.gstcatagory.catagoryName}</td>
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.date}</td>
+                    <td>${transaction.gstNumber}</td>
+                    <td>${transaction.gstAmount}</td>
+                    <td>${transaction.totalAmount}</td>
+
+                    <!-- Loop through products and display their names in the same row -->
+                    <td>
+                        <c:forEach items="${transaction.products}" var="product">
+                            ${product.productName}<br/>
+                        </c:forEach>
+                    </td>
+                    
+                     <td>
+                        <c:forEach items="${transaction.products}" var="product">
+                            ${product.productprize}<br/>
+                        </c:forEach>
+                    </td>
+
+                    <td><a href="Edittransaction?transactionId=${transaction.transactionId}">Edit</a></td>
                 </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${gstTransactionList}" var="transaction">
-                
-                  <c:if test="${transaction.active == true}">
-                    <tr>
-                        <td>${transaction.user.username}</td>
-                        <td>${transaction.gstrate.rate}</td>
-                        <td>${transaction.gstcatagory.catagoryName}</td>
-                        <td>${transaction.amount}</td>
-                        <td>${transaction.date}</td>
-                        <td>${transaction.gstNumber}</td>
-                        <td>${transaction.gstAmount}</td>
-                        <td>${transaction.totalAmount}</td>
-                         <td><a href="Edittransaction?transactionId=${transaction.transactionId}">Edit</a></td>
-                    </tr>
-                    </c:if>
-                </c:forEach>
-            </tbody>
-        </table>
+            </c:if>
+        </c:forEach>
+    </tbody>
+</table>
+      
     </div>
 
     <!-- Bootstrap JS and dependencies -->

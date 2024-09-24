@@ -15,11 +15,11 @@
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
       <div class="me-3">
       
-      <c:if test="${empty logginuser}">
+     <%--  <c:if test="${empty logginuser}">
       
          <c:redirect url="login"></c:redirect>
       
-      </c:if>
+      </c:if> --%>
         
       </div>
       <div>

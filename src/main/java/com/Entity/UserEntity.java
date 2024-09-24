@@ -36,8 +36,8 @@ public class UserEntity {
 	
   
     
-	   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	    private GstTransaction gsttrasaction;
+	  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	    private List<GstTransaction> gsttrasaction = new ArrayList<>();
 	
 	@ManyToOne
 	@JoinColumn(name = "role_id")

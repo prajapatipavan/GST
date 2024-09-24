@@ -6,8 +6,11 @@ import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.P
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.Entity.CustomerEntity;
 import com.Entity.GstTransaction;
 import com.Entity.UserEntity;
+import com.dto.GstTransactiondto;
+import com.dto.Userdto;
 
 public interface GstTransactionReositry extends JpaRepository<GstTransaction,Integer>{
 
@@ -30,6 +33,12 @@ public interface GstTransactionReositry extends JpaRepository<GstTransaction,Int
     nativeQuery = true)
 	
 	List<GstTransaction> findByUserActiveTrue();
+
+
+	List<GstTransaction> findByCustomer(CustomerEntity customer);
+
+
+	
 
 
 	

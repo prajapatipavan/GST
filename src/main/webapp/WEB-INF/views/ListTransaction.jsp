@@ -105,7 +105,7 @@
                 <th>Amount</th>
                 <th>Date</th>
                 <th>GST Number</th>
-                <th>GST Amount</th>
+                
                 <th>Total Amount</th>
                 <th>Action</th>
             </tr>
@@ -118,7 +118,7 @@
                     <td>${transaction.gstcatagory.catagoryName}</td>
                     <td>${transaction.amount}</td>
                     <td>${transaction.date}</td>
-                    <td>${transaction.gstNumber}</td>
+                    
                     <td>${transaction.gstAmount}</td>
                     <td>${transaction.totalAmount}</td>
                     <td><a href="/deletetransaction?transactionId=${transaction.transactionId}" class="btn btn-danger">DELETE</a></td>

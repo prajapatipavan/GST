@@ -36,8 +36,7 @@ public class Userdto {
 	
 	private Boolean active = true;
 	
-	    
-   private GstTransaction gsttrasaction;
+	private List<GstTransaction> gsttrasaction = new ArrayList<>();
 	
 	private RoleEntity role;
 

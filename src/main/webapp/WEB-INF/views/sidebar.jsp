@@ -50,6 +50,14 @@
               </a>
             </li>
             
+            
+             <li class="nav-item">
+              <a class="nav-link" href="listproduct">
+                <i class="menu-icon mdi mdi-file-document"></i>
+                <span class="menu-title">Managing Product</span>
+              </a>
+            </li>
+            
              <li class="nav-item">
               <a class="nav-link" href="about">
                 <i class="menu-icon mdi mdi-file-document"></i>

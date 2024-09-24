@@ -1,26 +1,32 @@
 package com.Entity;
 
+
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+
 import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
-@Table(name = "gst_invoice")
+@Table(name ="gst_invoice")
+@Data
 public class GstInvoicEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer id;
-
+	private Integer invoiceId;
+	
 	@ManyToOne
-	@JoinColumn(name = "transaction_id")
-	private GstTransaction transaction;
+	private UserEntity user;
 
 	@Column(name = "invoice_number")
 	private String invoiceNumber;
@@ -30,6 +36,8 @@ public class GstInvoicEntity {
 
 	@Column(name = "due_date")
 	private String dueDate;
+	
+	private double totalAmount;
 
-	private Boolean active = true;
+	private Boolean active=true;
 }

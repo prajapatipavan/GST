@@ -1,89 +1,148 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Invoice</title>
-    <link rel="stylesheet" href="path/to/your/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h2, h3 {
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .user-details, .invoice-form, .transaction-table {
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        table th {
+            background-color: #f4f4f4;
+        }
+        .total-amount {
+            text-align: right;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-<h1>User Details</h1>
+    <div class="container">
+        <!-- User Details Section -->
+        <div class="user-details">
+            <h2>User Details</h2>
+            <p><strong>User ID:</strong> ${userd.userId}</p>
+            <p><strong>Username:</strong> ${userd.username}</p>
+            <p><strong>Email:</strong> ${userd.email}</p>
+        </div>
 
-
-
-    <p><strong>User ID:</strong> ${userd.userId}</p>
-    <p><strong>Username:</strong> ${userd.username}</p>
-    <p><strong>Email:</strong> ${userd.email}</p>
-   
-
-
-<h1>Select Transactions for Invoice</h1>
-
-<form id="invoiceForm" action="createInvoice" method="post">
-    <table>
-        <thead>
-            <tr>
-                <th>Select</th>
-                <th>Transaction ID</th>
-                <th>GST Rate</th>
-                <th>Amount</th>
-                <th>GST Number</th>
-                <th>Date</th>
-                <th>Total Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:set var="totalAmount" value="0.0" />
-            <c:forEach var="transaction" items="${transactions}">
+        <!-- Transaction Table Section -->
+        <div class="transaction-table">
+            <h3>Select Transactions for Invoice</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>GST Rate</th>
+                        <th>GST Category</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>GST Number</th>
+                        <th>GST Amount</th>
+                        <th>Total Amount</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                     <c:forEach var="transaction" items="${gstTransactionList}">
                 <tr>
-                    <td>
-                        <input type="checkbox" name="selectedTransactions" value="${transaction.transactionId}" 
-                               onclick="updateTotalAmount(${transaction.totalAmount})" />
-                    </td>
-                    <td>${transaction.transactionId}</td>
+                     <c:if test="${transaction.active == true}">
+                    <td>${transaction.user.username}</td>
                     <td>${transaction.gstrate.rate}</td>
+                    <td>${transaction.gstcatagory.catagoryName}</td>
                     <td>${transaction.amount}</td>
-                    <td>${transaction.gstNumber}</td>
                     <td>${transaction.date}</td>
+                    <td>${transaction.gstNumber}</td>
+                    <td>${transaction.gstAmount}</td>
                     <td>${transaction.totalAmount}</td>
+                  </c:if>
                 </tr>
             </c:forEach>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
 
-    <h2>Total Amount: <span id="totalAmountDisplay">0.00</span></h2>
+        <!-- Total Amount -->
+        <div class="total-amount">
+            <p><strong>Total Amount:</strong>${totalAmount}</p>
+           
+        
+        </div>
 
-    <h2>Invoice Details</h2>
-    <label for="invoiceNumber">Invoice Number:</label>
-    <input type="text" id="invoiceNumber" name="invoiceNumber" required />
-    <br />
-    <label for="issueDate">Issue Date:</label>
-    <input type="date" id="issueDate" name="issueDate" required />
-    <br />
-    <label for="dueDate">Due Date:</label>
-    <input type="date" id="dueDate" name="dueDate" required />
-    <br />
-    <button type="submit">Create Invoice</button>
-</form>
+        <!-- Create Invoice Form -->
+        <div class="invoice-form">
+            <h3>Create Invoice</h3>
+            <form action="createInvoice" method="post">
+                <label for="user">Select User:</label>
+                 <select id="user" name="user" required>
+            <c:forEach items="${userlogin}" var="u">
+                <option value="${u.userId}" selected>${u.username}</option>
+            </c:forEach>
+        </select>
+                
 
-<!-- Thank You Message -->
-<div id="thankYouMessage" style="display:none;">
-    <h2>Thank You for Your Business!</h2>
-</div>
+                <label for="invoiceNumber">Invoice Number:</label>
+                <input type="text" id="invoiceNumber" name="invoiceNumber" required>
 
-<script>
-    let totalAmount = 0.0;
+                <label for="issueDate">Issue Date:</label>
+                <input type="date" id="issueDate" name="issueDate" required>
 
-    function updateTotalAmount(transactionTotal) {
-        // Update the total amount based on selected transactions
-        totalAmount += transactionTotal;
-        document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2);
-    }
+                <label for="dueDate">Due Date:</label>
+                <input type="date" id="dueDate" name="dueDate" required>
 
-    // Optionally, handle form submission to clear total amount
-    document.getElementById('invoiceForm').onsubmit = function() {
-        document.getElementById('thankYouMessage').style.display = 'block';
-    };
-</script>
-
+                <button type="submit">Create Invoice</button>
+                <input type="hidden" id="totalAmount" name="totalAmount" value="${totalAmount}" />
+            </form>
+        </div>
+    </div>
 </body>
 </html>

@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.Entity.GstTransaction;
 import com.Entity.UserEntity;
+import com.dto.GstTransactiondto;
 import com.dto.Userdto;
 import com.factory.RepositoryFactory;
 
@@ -28,6 +30,8 @@ public class Userservice {
         UserEntity userEntity = factoryrepo.getUserRepo().findByEmail(email);
         return userToUserdto(userEntity); 
     }
+    
+   
 
 
     public List<Userdto> listUsers(Userdto loggedUserDto) {
@@ -51,6 +55,30 @@ public class Userservice {
         return userToUserdto(userEntity);
     }
 
+    
+public List<GstTransactiondto> listTransactionLoginUser(Userdto user){
+		
+		List<GstTransaction> transactions =factoryrepo.getGstTransaction().findByUser(userdtoToUserEntity(user));
+		
+		      return transactions.stream()
+				 .filter(GstTransaction::getActive) 
+                .map(this::TransactionToTransactiondto) 
+                .collect(Collectors.toList());
+
+	}
+
+
+
+public List<Userdto> listuserlogin(Userdto userdto){
+	
+	         List<UserEntity>  user   =  factoryrepo.getUserRepo().findByuserId(userdto.getUserId());
+	         
+	                  List<Userdto> collect = user.stream().map(this::userToUserdto).collect(Collectors.toList());
+	           
+	         
+	  return collect ;
+}
+    
    
     public List<Userdto> listAllActiveUsers() {
         List<UserEntity> activeUsers = factoryrepo.getUserRepo().findByActiveTrue();
@@ -75,5 +103,11 @@ public class Userservice {
     }
 
 
-	
+    public GstTransactiondto TransactionToTransactiondto(GstTransaction gsttransaction) {
+
+		GstTransactiondto gsttransactiondto = factoryrepo.getModelmapper().map(gsttransaction, GstTransactiondto.class);
+
+		return gsttransactiondto;
+
+	}
 }
